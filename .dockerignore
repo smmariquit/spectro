@@ -1,0 +1,11 @@
+/.eslintcache
+/.svelte-kit
+/.vercel
+
+node_modules
+
+.DS_Store
+.env
+.env.*
+
+**/.claude/**.local.json
