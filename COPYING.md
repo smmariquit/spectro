@@ -10,7 +10,7 @@ Spectro is licensed under the [GNU Affero General Public License v3.0](./LICENSE
 
 ## Exceptions
 
-| Files                | Author(s)                                   | License                                        |
+| Files | Author(s) | License |
 | -------------------- | ------------------------------------------- | ---------------------------------------------- |
 | `src/lib/brand/**/*` | [Angelica Julianne A. Raborar][Anjellyrika] | [Creative Commons BY-NC-ND 4.0][CC_BY-NC-ND_4] |
 
