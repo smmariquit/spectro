@@ -6,7 +6,7 @@ Spectro is a [Discord bot][spectro-invite-link] that enables your community memb
 
 # Development
 
-Spectro is a standard full-stack [SvelteKit][Svelte] web application that leverages [PostgreSQL] as the database layer.
+Spectro is a standard full-stack [SvelteKit][Svelte] web application that uses [PostgreSQL] as the database layer.
 
 [Svelte]: https://svelte.dev/
 [PostgreSQL]: https://www.postgresql.org/
@@ -27,16 +27,16 @@ pnpm env:prod pnpm discord:register
 
 Spectro uses Docker Compose to run local development services:
 
-- **PostgreSQL** (`db`) — The database layer for data persistence (port `5432`).
-- **Inngest** (`inngest`) — A local Inngest dev server for background job processing (port `8288`).
-- **OpenObserve** (`o2`) — A web UI for visualizing OpenTelemetry traces and logs (port `5080`).
+- **PostgreSQL** (`db`): The database layer for data persistence (port `5432`).
+- **Inngest** (`inngest`): A local Inngest dev server for background job processing (port `8288`).
+- **OpenObserve** (`o2`): A web UI for visualizing OpenTelemetry traces and logs (port `5080`).
 
 The following environment variables are required for the database to work.
 
-| **Name**                | **Description**                                                    |
+| **Name** | **Description** |
 | ----------------------- | ------------------------------------------------------------------ |
 | `POSTGRES_DATABASE_URL` | The URL connection string for the PostgreSQL development database. |
-| `POSTGRES_PASSWORD`     | The password with which to initialize the default `postgres` user. |
+| `POSTGRES_PASSWORD` | The password with which to initialize the default `postgres` user. |
 
 ```bash
 # Start all local development services.
@@ -63,8 +63,8 @@ The bot relies on two callback endpoints that receives webhook events from Disco
 1. The **interactions endpoint** (i.e., [`/webhook/discord/interaction/`][spectro-discord-interaction]) for [receiving application commands][discord-interactions] via HTTP POST requests from Discord.
 1. The **webhook events endpoint** (i.e., [`/webhook/discord/event/`][spectro-discord-event]) for receiving [application authorization][discord-application-authorized] events from Discord.
 
-[spectro-discord-interaction]: ./src/routes/webhook/discord/interaction/+server.ts
-[spectro-discord-event]: ./src/routes/webhook/discord/event/+server.ts
+[spectro-discord-interaction]:./src/routes/webhook/discord/interaction/+server.ts
+[spectro-discord-event]:./src/routes/webhook/discord/event/+server.ts
 [discord-interactions]: https://discord.com/developers/docs/interactions/overview#preparing-for-interactions
 [discord-application-authorized]: https://discord.com/developers/docs/events/webhook-events#application-authorized
 
@@ -82,27 +82,27 @@ curl --request 'PUT' --header 'Content-Type: application/json' --header "Authori
 
 Spectro requires some environment variables to run correctly. If the following table is outdated, a canonical list of variables can be found in the [`src/lib/server/env/*.ts`](./src/lib/server/env/) files.
 
-| **Name**                  | **Description**                                                                                                     | **Default** |
+| **Name** | **Description** | **Default** |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `DISCORD_PUBLIC_KEY`      | The public key of the Discord application that will be used for the verification of incoming webhooks.              |             |
-| `DISCORD_BOT_TOKEN`       | The secret key of the Discord application that will be used for the verification of OAuth2 client credential flows. |             |
-| `INNGEST_EVENT_KEY`       | The event key used to send events to Inngest.                                                                       |             |
-| `INNGEST_SIGNING_KEY`     | The signing key used to verify incoming webhook requests from Inngest.                                              |             |
-| `POSTGRES_DATABASE_URL`   | The URL connection string for the PostgreSQL production database.                                                   |             |
-| `SPECTRO_DATABASE_DRIVER` | The database driver to use. Accepts `pg` for the standard driver or `neon` for the Neon serverless driver.          | `pg`        |
+| `DISCORD_PUBLIC_KEY` | The public key of the Discord application that will be used for the verification of incoming webhooks. | |
+| `DISCORD_BOT_TOKEN` | The secret key of the Discord application that will be used for the verification of OAuth2 client credential flows. | |
+| `INNGEST_EVENT_KEY` | The event key used to send events to Inngest. | |
+| `INNGEST_SIGNING_KEY` | The signing key used to verify incoming webhook requests from Inngest. | |
+| `POSTGRES_DATABASE_URL` | The URL connection string for the PostgreSQL production database. | |
+| `SPECTRO_DATABASE_DRIVER` | The database driver to use. Accepts `pg` for the standard driver or `neon` for the Neon serverless driver. | `pg` |
 
 The following variables are optional in development, but _highly_ recommended in the production environment for [OpenTelemetry](#opentelemetry-instrumentation) integration. The standard environment variables are supported, such as (but not limited to):
 
-| **Name**                      | **Description**                                                                         | **Recommended**                                                |
+| **Name** | **Description** | **Recommended** |
 | ----------------------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| `OTEL_EXPORTER_OTLP_ENDPOINT` | The base OTLP endpoint URL for exporting logs, metrics, and traces.                     | `http://localhost:5080/api/default`                            |
-| `OTEL_EXPORTER_OTLP_HEADERS`  | Extra percent-encoded HTTP headers used for exporting telemetry (e.g., authentication). | `Authorization=Basic%20YWRtaW5AZXhhbXBsZS5jb206cGFzc3dvcmQ%3D` |
-| `OTEL_EXPORTER_OTLP_PROTOCOL` | The underlying exporter protocol (e.g., JSON, Protobufs, gRPC, etc.).                   | `http/protobuf`                                                |
+| `OTEL_EXPORTER_OTLP_ENDPOINT` | The base OTLP endpoint URL for exporting logs, metrics, and traces. | `http://localhost:5080/api/default` |
+| `OTEL_EXPORTER_OTLP_HEADERS` | Extra percent-encoded HTTP headers used for exporting telemetry (e.g., authentication). | `Authorization=Basic%20YWRtaW5AZXhhbXBsZS5jb206cGFzc3dvcmQ%3D` |
+| `OTEL_EXPORTER_OTLP_PROTOCOL` | The underlying exporter protocol (e.g., JSON, Protobufs, gRPC, etc.). | `http/protobuf` |
 
 > [!NOTE]
 > The "recommended" values are only applicable to the development environment with OpenObserve running in the background. See the [`compose.yml`] for more details on the OpenObserve configuration.
 
-[`compose.yml`]: ./compose.yml
+[`compose.yml`]:./compose.yml
 
 ### Local Telemetry with OpenObserve
 
@@ -110,13 +110,13 @@ To enable full observability in local development:
 
 1. Start the local services (including OpenObserve):
 
-   ```bash
+ ```bash
    docker compose up --detach
    ```
 
 2. Export the OTEL environment variables before running the dev server:
 
-   ```bash
+ ```bash
    export OTEL_EXPORTER_OTLP_ENDPOINT='http://localhost:5080/api/default'
    export OTEL_EXPORTER_OTLP_HEADERS='Authorization=Basic%20YWRtaW5AZXhhbXBsZS5jb206cGFzc3dvcmQ%3D'
    export OTEL_EXPORTER_OTLP_PROTOCOL='http/protobuf'
